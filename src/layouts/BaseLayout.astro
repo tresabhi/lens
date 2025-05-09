@@ -1,0 +1,32 @@
+---
+import { Flex } from "@radix-ui/themes";
+import { LensTheme } from "../components/LensTheme";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Très' Lens</title>
+
+    <style is:global>
+      @import "@radix-ui/themes/styles.css";
+
+      body {
+        margin: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <LensTheme>
+      <Flex justify="center" px="8" py="9">
+        <Flex direction="column" flexGrow="1" gap="9" maxWidth="80rem">
+          <slot />
+        </Flex>
+      </Flex>
+    </LensTheme>
+  </body>
+</html>

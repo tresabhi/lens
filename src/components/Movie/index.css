@@ -1,0 +1,7 @@
+.movie-title-card {
+  background: linear-gradient(var(--white-a9), var(--white-a11));
+}
+
+.dark .movie-title-card {
+  background: linear-gradient(var(--black-a7), var(--black-a9));
+}
