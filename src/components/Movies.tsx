@@ -1,4 +1,4 @@
-import { Flex, Heading } from "@radix-ui/themes";
+import { Grid, Heading } from "@radix-ui/themes";
 import { movies } from "../constants/movies";
 import { Movie } from "./Movie";
 import { SectionWrapper } from "./SectionWrapper";
@@ -8,11 +8,15 @@ export function Movies() {
     <SectionWrapper>
       <Heading>Movies</Heading>
 
-      <Flex gap="5" wrap="wrap">
+      <Grid
+        columns="repeat(auto-fill, minmax(14rem, 1fr))"
+        flow="dense"
+        gap="5"
+      >
         {movies.map((movie) => (
           <Movie movie={movie} />
         ))}
-      </Flex>
+      </Grid>
     </SectionWrapper>
   );
 }

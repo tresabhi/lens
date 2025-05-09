@@ -1,6 +1,6 @@
 import { Box, Flex, Text } from "@radix-ui/themes";
 import type { Movie } from "../../constants/movies";
-import { wikimedia } from "../../utils/wikimedia";
+import { Wikimedia, wikimedia } from "../../utils/wikimedia";
 import { Stars } from "../Stars";
 import "./index.css";
 
@@ -9,12 +9,20 @@ interface MovieProps {
 }
 
 export function Movie({ movie }: MovieProps) {
+  let poster;
+
+  if (movie.poster instanceof Wikimedia) {
+    poster = wikimedia(movie.poster);
+  } else {
+    poster = `/posters/${movie.poster}.jpg`;
+  }
+
   return (
     <Flex
       flexShrink="0"
       direction="column"
       style={{
-        backgroundImage: `url(${wikimedia(movie.poster)})`,
+        backgroundImage: `url(${poster})`,
         backgroundSize: "cover",
         backgroundPosition: "bottom",
         overflow: "hidden",
@@ -22,10 +30,9 @@ export function Movie({ movie }: MovieProps) {
       }}
     >
       <Box
-        width="14rem"
         height="21rem"
         style={{
-          backgroundImage: `url(${wikimedia(movie.poster)})`,
+          backgroundImage: `url(${poster})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -35,7 +42,6 @@ export function Movie({ movie }: MovieProps) {
         style={{
           backdropFilter: "blur(1rem)",
         }}
-        maxWidth="14rem"
       >
         <Flex p="3" direction="column" className="movie-title-card" gap="2">
           <Flex align="center" gap="2">

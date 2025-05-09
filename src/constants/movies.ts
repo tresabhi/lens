@@ -2,7 +2,7 @@ import { Wikimedia } from "../utils/wikimedia";
 
 export interface Movie {
   name: string;
-  poster: Wikimedia;
+  poster: string | Wikimedia;
   rating: number;
   year: number;
 }
@@ -30,7 +30,7 @@ export const movies: Movie[] = [
     name: "Megamind",
     poster: new Wikimedia("89", "Megamind2010Poster"),
     year: 2010,
-    rating: 4,
+    rating: 4.5,
   },
   {
     name: "The SpongeBob SquarePants Movie",
@@ -64,6 +64,24 @@ export const movies: Movie[] = [
     name: "Tenet",
     poster: new Wikimedia("14", "Tenet_movie_poster"),
     year: 2020,
+    rating: 5,
+  },
+  {
+    name: "Inception",
+    poster: new Wikimedia("2e", "Inception_%282010%29_theatrical_poster"),
+    year: 2010,
+    rating: 5,
+  },
+  {
+    name: "Hamlet in the Golden Vale",
+    poster: "hamlet-in-the-golden-vale",
+    year: 2018,
+    rating: 4.5,
+  },
+  {
+    name: "The Lego Movie",
+    poster: new Wikimedia("10", "The_Lego_Movie_poster"),
+    year: 2014,
     rating: 5,
   },
 ].sort((a, b) => b.year - a.year);
