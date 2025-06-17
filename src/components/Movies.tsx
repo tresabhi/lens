@@ -1,7 +1,9 @@
 import { Grid, Heading } from "@radix-ui/themes";
-import { movies } from "../constants/movies";
+import { tmdb } from "../constants/tmdb";
 import { Movie } from "./Movie";
 import { SectionWrapper } from "./SectionWrapper";
+
+const movies = await tmdb.allAccountRatedMovies(import.meta.env.TMDB_ACCOUNT);
 
 export function Movies() {
   return (
@@ -9,12 +11,17 @@ export function Movies() {
       <Heading>Movies</Heading>
 
       <Grid
-        columns="repeat(auto-fill, minmax(14rem, 1fr))"
+        columns={{
+          initial: "repeat(auto-fill, minmax(8rem, 1fr))",
+          xs: "repeat(auto-fill, minmax(10rem, 1fr))",
+          sm: "repeat(auto-fill, minmax(12rem, 1fr))",
+          md: "repeat(auto-fill, minmax(14rem, 1fr))",
+        }}
         flow="dense"
         gap="5"
       >
         {movies.map((movie) => (
-          <Movie movie={movie} />
+          <Movie key={movie.id} movie={movie} />
         ))}
       </Grid>
     </SectionWrapper>

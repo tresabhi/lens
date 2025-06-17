@@ -2,14 +2,16 @@ import { StarFilledIcon, StarIcon } from "@radix-ui/react-icons";
 import { Box, Flex, Text } from "@radix-ui/themes";
 
 interface StarsProps {
-  stars: number;
+  rating: number;
 }
 
-export function Stars({ stars }: StarsProps) {
+export function Stars({ rating }: StarsProps) {
+  const stars = rating / 2;
+
   return (
     <Flex>
       {Array.from({ length: 5 }).map((_, index) => (
-        <Box position="relative" width="0.75rem" height="0.75rem">
+        <Box key={index} position="relative" width="0.75rem" height="0.75rem">
           <Text color="gray">
             <StarIcon
               style={{

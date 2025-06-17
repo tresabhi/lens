@@ -22,7 +22,17 @@ import { LensTheme } from "../components/LensTheme";
 
   <body>
     <LensTheme>
-      <Flex justify="center" px="8" py="9">
+      <Flex
+        justify="center"
+        px={{
+          initial: "5",
+          md: "8",
+        }}
+        py={{
+          initial: "8",
+          md: "9",
+        }}
+      >
         <Flex direction="column" flexGrow="1" gap="9" maxWidth="80rem">
           <slot />
         </Flex>

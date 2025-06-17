@@ -1,28 +1,21 @@
 import { Box, Flex, Text } from "@radix-ui/themes";
-import type { Movie } from "../../constants/movies";
-import { Wikimedia, wikimedia } from "../../utils/wikimedia";
+import { tmdb } from "../../constants/tmdb";
 import { Stars } from "../Stars";
 import "./index.css";
 
 interface MovieProps {
-  movie: Movie;
+  movie: TMDB.AccountRatedMoviesResult;
 }
 
-export function Movie({ movie }: MovieProps) {
-  let poster;
-
-  if (movie.poster instanceof Wikimedia) {
-    poster = wikimedia(movie.poster);
-  } else {
-    poster = `/posters/${movie.poster}.jpg`;
-  }
+export async function Movie({ movie }: MovieProps) {
+  const releaseDate = new Date(movie.release_date);
 
   return (
     <Flex
       flexShrink="0"
       direction="column"
       style={{
-        backgroundImage: `url(${poster})`,
+        backgroundImage: `url(${await tmdb.image(movie.poster_path, "w92")})`,
         backgroundSize: "cover",
         backgroundPosition: "bottom",
         overflow: "hidden",
@@ -30,9 +23,12 @@ export function Movie({ movie }: MovieProps) {
       }}
     >
       <Box
-        height="21rem"
         style={{
-          backgroundImage: `url(${poster})`,
+          backgroundImage: `url(${await tmdb.image(
+            movie.poster_path,
+            "w342"
+          )})`,
+          aspectRatio: "2 / 3",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -43,12 +39,12 @@ export function Movie({ movie }: MovieProps) {
           backdropFilter: "blur(1rem)",
         }}
       >
-        <Flex p="3" direction="column" className="movie-title-card" gap="2">
+        <Flex p="3" direction="column" className="movie-title-card" gap="1">
           <Flex align="center" gap="2">
-            <Stars stars={movie.rating} />
+            <Stars rating={movie.rating} />
 
             <Text color="amber" size="1">
-              {movie.rating} / 5
+              {movie.rating / 2} / 5
             </Text>
           </Flex>
 
@@ -62,11 +58,11 @@ export function Movie({ movie }: MovieProps) {
                 whiteSpace: "nowrap",
               }}
             >
-              {movie.name}
+              {movie.original_title}
             </Text>
 
             <Text size="2" color="gray">
-              {movie.year}
+              {releaseDate.getFullYear()}
             </Text>
           </Flex>
         </Flex>
