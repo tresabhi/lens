@@ -1,7 +1,7 @@
 ---
 import { Grid, Heading } from "@radix-ui/themes";
 import { tmdb } from "../constants/tmdb";
-import { Movie } from "./Movie";
+import Movie from "./Movie.astro";
 import { SectionWrapper } from "./SectionWrapper";
 
 const movies = await tmdb
@@ -24,6 +24,6 @@ const movies = await tmdb
     flow="dense"
     gap="5"
   >
-    {movies.map((movie) => <Movie movie={movie} />)}
+    {movies.map((movie) => <Movie {movie} />)}
   </Grid>
 </SectionWrapper>

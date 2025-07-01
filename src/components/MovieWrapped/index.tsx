@@ -1,25 +1,39 @@
 import { Box, Flex, Text } from "@radix-ui/themes";
-import { tmdb } from "../../constants/tmdb";
+import { useCallback, useEffect, useRef } from "react";
 import { Stars } from "../Stars";
 import "./index.css";
 
-interface MovieProps {
+interface Props {
   movie: TMDB.AccountRatedMoviesResult;
+  poster: string;
+  backdrop: string;
 }
 
-export async function Movie({ movie }: MovieProps) {
+const RADIUS = 4;
+
+export function MovieWrapped({ movie, poster, backdrop }: Props) {
   const releaseDate = new Date(movie.release_date);
+  const popup = useRef<HTMLDivElement>(null!);
+  const reposition = useCallback(() => {
+    const rect = popup.current.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const u = x / window.innerWidth;
+
+    popup.current.style.left = `${u * 100}%`;
+    popup.current.style.transform = `translate(-${u * 100}%, -50%)`;
+  }, []);
+
+  useEffect(reposition);
 
   return (
-    <Box className="movie-card" position="relative">
+    <Box className="movie-card" position="relative" onMouseEnter={reposition}>
       <Flex
         direction="column"
         style={{
-          backgroundImage: `url(${await tmdb.image(movie.poster_path, "w92")})`,
+          backgroundImage: `url(${poster})`,
           backgroundSize: "cover",
           backgroundPosition: "bottom",
-          borderRadius: "var(--radius-4)",
-          overflow: "hidden",
+          borderRadius: `var(--radius-${RADIUS})`,
           boxShadow: "var(--shadow-3)",
         }}
       >
@@ -27,19 +41,30 @@ export async function Movie({ movie }: MovieProps) {
           className="poster"
           position="relative"
           style={{
-            backgroundImage: `url(${await tmdb.image(
-              movie.poster_path,
-              "w342"
-            )})`,
+            borderRadius: `var(--radius-${RADIUS}) var(--radius-${RADIUS}) 0 0`,
+            backgroundImage: `url(${poster})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             aspectRatio: "2 / 3",
           }}
-        />
+        >
+          <Box
+            display={{ initial: "none", md: "block" }}
+            ref={popup}
+            className="popup"
+            style={{
+              borderRadius: `var(--radius-${RADIUS})`,
+              boxShadow: "var(--shadow-6)",
+              backgroundImage: `url(${backdrop})`,
+            }}
+          />
+        </Box>
 
         <Box
           style={{
             backdropFilter: "blur(1rem)",
+            borderRadius: `0 0 var(--radius-${RADIUS}) var(--radius-${RADIUS})`,
+            overflow: "hidden",
           }}
         >
           <Flex p="3" direction="column" className="movie-title-card" gap="1">
@@ -70,35 +95,6 @@ export async function Movie({ movie }: MovieProps) {
             </Flex>
           </Flex>
         </Box>
-      </Flex>
-
-      <Flex
-        direction="column"
-        justify="end"
-        className="popup"
-        style={{
-          zIndex: 2,
-          backgroundImage: `url(${await tmdb.image(
-            movie.backdrop_path,
-            "w1280"
-          )})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          aspectRatio: "16 / 9",
-          overflow: "hidden",
-        }}
-      >
-        <Flex
-          className="info"
-          p="4"
-          style={{
-            backdropFilter: "blur(1rem)",
-          }}
-        >
-          <Text size="5" weight="medium">
-            {movie.original_title}
-          </Text>
-        </Flex>
       </Flex>
     </Box>
   );

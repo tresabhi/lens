@@ -4,9 +4,7 @@ export class TMDB {
 
   private configurationCache: TMDB.Configuration | null = null;
 
-  constructor(private readAccessToken: string) {
-    console.log(import.meta.env.TMDB_ACCOUNT);
-  }
+  constructor(private readAccessToken: string) {}
 
   async accountRatedMovies(account: string, page: number) {
     return await this.get<TMDB.AccountRatedMovies>(

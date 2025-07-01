@@ -1,0 +1,25 @@
+.movie-title-card {
+  background: linear-gradient(var(--white-a9), var(--white-a11));
+}
+
+.dark .movie-title-card {
+  background: linear-gradient(var(--black-a7), var(--black-a9));
+}
+
+.movie-card .popup {
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 50%;
+  background-position: center;
+  background-size: cover;
+  transition-duration: 200ms;
+  z-index: 2;
+}
+
+.movie-card:hover .popup {
+  opacity: 1;
+  width: calc(100% * (16 / 9) * (3 / 2) + var(--space-4));
+  height: calc(100% + var(--space-4));
+}
