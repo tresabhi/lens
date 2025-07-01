@@ -13,8 +13,10 @@ const RADIUS = 4;
 
 export function MovieWrapped({ movie, poster, backdrop }: Props) {
   const releaseDate = new Date(movie.release_date);
-  const popup = useRef<HTMLDivElement>(null!);
+  const popup = useRef<HTMLDivElement>(null);
   const reposition = useCallback(() => {
+    if (!popup.current) return;
+
     const rect = popup.current.getBoundingClientRect();
     const x = rect.left + rect.width / 2;
     const u = x / window.innerWidth;
@@ -48,16 +50,28 @@ export function MovieWrapped({ movie, poster, backdrop }: Props) {
             aspectRatio: "2 / 3",
           }}
         >
-          <Box
-            display={{ initial: "none", md: "block" }}
+          <Flex
+            align="end"
+            display={{ initial: "none", md: "flex" }}
             ref={popup}
             className="popup"
             style={{
               borderRadius: `var(--radius-${RADIUS})`,
               boxShadow: "var(--shadow-6)",
               backgroundImage: `url(${backdrop})`,
+              overflow: "hidden",
             }}
-          />
+          >
+            <Box
+              className="description"
+              p="4"
+              style={{
+                backdropFilter: "blur(1rem)",
+              }}
+            >
+              <Text>{movie.overview}</Text>
+            </Box>
+          </Flex>
         </Box>
 
         <Box

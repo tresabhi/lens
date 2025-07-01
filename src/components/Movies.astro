@@ -1,5 +1,5 @@
 ---
-import { Grid, Heading } from "@radix-ui/themes";
+import { Grid } from "@radix-ui/themes";
 import { tmdb } from "../constants/tmdb";
 import Movie from "./Movie.astro";
 import { SectionWrapper } from "./SectionWrapper";
@@ -12,8 +12,6 @@ const movies = await tmdb
 ---
 
 <SectionWrapper>
-  <Heading>Movies</Heading>
-
   <Grid
     columns={{
       initial: "repeat(auto-fill, minmax(8rem, 1fr))",
