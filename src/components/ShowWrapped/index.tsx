@@ -1,18 +1,23 @@
 import { Box, Flex, Text } from "@radix-ui/themes";
 import { useCallback, useEffect, useRef } from "react";
+import type { AccountRatedMovie, AccountRatedTV } from "../../types/tmdb";
 import { Stars } from "../Stars";
 import "./index.css";
 
 interface Props {
-  movie: TMDB.AccountRatedMoviesResult;
+  show: AccountRatedMovie | AccountRatedTV;
   poster: string;
   backdrop: string;
 }
 
 const RADIUS = 4;
 
-export function MovieWrapped({ movie, poster, backdrop }: Props) {
-  const releaseDate = new Date(movie.release_date);
+export function ShowWrapped({ show, poster, backdrop }: Props) {
+  const releaseDate = new Date(
+    "release_date" in show ? show.release_date : show.first_air_date,
+  );
+  const title =
+    "original_title" in show ? show.original_title : show.original_name;
   const popup = useRef<HTMLDivElement>(null);
   const reposition = useCallback(() => {
     if (!popup.current) return;
@@ -60,10 +65,10 @@ export function MovieWrapped({ movie, poster, backdrop }: Props) {
         >
           <Flex p="3" direction="column" className="movie-title-card" gap="1">
             <Flex align="center" gap="2">
-              <Stars rating={movie.rating} />
+              <Stars rating={show.rating} />
 
               <Text color="amber" size="1">
-                {movie.rating / 2} / 5
+                {show.rating / 2} / 5
               </Text>
             </Flex>
 
@@ -77,7 +82,7 @@ export function MovieWrapped({ movie, poster, backdrop }: Props) {
                   whiteSpace: "nowrap",
                 }}
               >
-                {movie.original_title}
+                {title}
               </Text>
 
               <Text size="2" color="gray">

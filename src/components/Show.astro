@@ -1,0 +1,18 @@
+---
+import { tmdb } from "../constants/tmdb";
+import type { AccountRatedMovie, AccountRatedTV } from "../types/tmdb";
+import { ShowWrapped } from "./ShowWrapped";
+
+interface Props {
+  show: AccountRatedMovie | AccountRatedTV;
+}
+
+const { show } = Astro.props;
+---
+
+<ShowWrapped
+  client:load
+  {show}
+  poster={await tmdb.image(show.poster_path, "w342")}
+  backdrop={await tmdb.image(show.backdrop_path, "w1280")}
+/>

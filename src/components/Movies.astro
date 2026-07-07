@@ -1,10 +1,10 @@
 ---
 import { Grid } from "@radix-ui/themes";
 import { tmdb } from "../constants/tmdb";
-import Movie from "./Movie.astro";
 import { SectionWrapper } from "./SectionWrapper";
+import Show from "./Show.astro";
 
-const movies = await tmdb.allAccountRatedMovies(import.meta.env.TMDB_ACCOUNT);
+const movies = await tmdb.everything(import.meta.env.TMDB_ACCOUNT);
 ---
 
 <SectionWrapper>
@@ -18,6 +18,6 @@ const movies = await tmdb.allAccountRatedMovies(import.meta.env.TMDB_ACCOUNT);
     flow="dense"
     gap="5"
   >
-    {movies.map((movie) => <Movie {movie} />)}
+    {movies.map((show) => <Show {show} />)}
   </Grid>
 </SectionWrapper>
