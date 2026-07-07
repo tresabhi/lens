@@ -17,8 +17,8 @@ concurrency:
   cancel-in-progress: ${{ github.ref == 'refs/heads/main' }}
 
 env:
-  TMDB_ACCOUNT: ${{ secrets.TMDB_ACCOUNT }}
   TMDB_ACCESS_TOKEN: ${{ secrets.TMDB_ACCESS_TOKEN }}
+  TMDB_ACCOUNT_OBJECT_ID: ${{ secrets.TMDB_ACCOUNT_OBJECT_ID }}
 
 jobs:
   build:
