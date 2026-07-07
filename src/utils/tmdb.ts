@@ -7,7 +7,7 @@ import type {
 
 export class TMDB {
   private base = "https://api.themoviedb.org";
-  private version = 3;
+  private version = 4;
 
   private configurationCache: TMDBConfiguration | null = null;
 
@@ -15,13 +15,13 @@ export class TMDB {
 
   async accountRatedMovies(account: string, page: number) {
     return await this.get<Paginated<AccountRatedMovie>>(
-      `account/${account}/rated/movies?page=${page}&sort_by=created_at.desc`,
+      `account/${account}/movie/rated?page=${page}`,
     );
   }
 
   async accountRatedTV(account: string, page: number) {
     return await this.get<Paginated<AccountRatedTV>>(
-      `account/${account}/rated/tv?page=${page}&sort_by=created_at.desc`,
+      `account/${account}/tv/rated?page=${page}`,
     );
   }
 
@@ -51,15 +51,26 @@ export class TMDB {
   }
 
   async everything(account: string) {
-    return await Promise.all([
+    const raw = await Promise.all([
       this.allAccountRatedMovies(account),
       this.allAccountRatedTV(account),
-    ]).then((results) => results.flat());
+    ]);
+    const mixed = raw.flat();
+    const dated = mixed.map((show) => ({
+      date: new Date(show.account_rating.created_at),
+      show,
+    }));
+    const sorted = dated.sort((a, b) => b.date.getTime() - a.date.getTime());
+
+    return sorted.map((item) => item.show);
   }
 
   async configuration() {
     if (this.configurationCache === null) {
-      const configuration = await this.get<TMDBConfiguration>("configuration");
+      const configuration = await this.get<TMDBConfiguration>(
+        "configuration",
+        3,
+      );
       this.configurationCache = configuration;
 
       return configuration;
@@ -74,15 +85,16 @@ export class TMDB {
     return url;
   }
 
-  async get<Type>(path: string) {
-    const url = `${this.base}/${this.version}/${path}`;
+  async get<Type>(path: string, version = this.version) {
+    const url = `${this.base}/${version}/${path}`;
     const headers: HeadersInit = {
       Authorization: `Bearer ${this.readAccessToken}`,
     };
+
     const response = await fetch(url, { headers });
 
     if (!response.ok) {
-      throw new Error(`HTTP error ${response.status}`);
+      throw new Error(`HTTP error ${response.status} for ${url}`);
     }
 
     const json = (await response.json()) as Type;

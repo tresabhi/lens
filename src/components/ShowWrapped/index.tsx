@@ -7,12 +7,11 @@ import "./index.css";
 interface Props {
   show: AccountRatedMovie | AccountRatedTV;
   poster: string;
-  backdrop: string;
 }
 
 const RADIUS = 4;
 
-export function ShowWrapped({ show, poster, backdrop }: Props) {
+export function ShowWrapped({ show, poster }: Props) {
   const releaseDate = new Date(
     "release_date" in show ? show.release_date : show.first_air_date,
   );
@@ -65,10 +64,10 @@ export function ShowWrapped({ show, poster, backdrop }: Props) {
         >
           <Flex p="3" direction="column" className="movie-title-card" gap="1">
             <Flex align="center" gap="2">
-              <Stars rating={show.rating} />
+              <Stars rating={show.account_rating.value} />
 
               <Text color="amber" size="1">
-                {show.rating / 2} / 5
+                {show.account_rating.value / 2} / 5
               </Text>
             </Flex>
 

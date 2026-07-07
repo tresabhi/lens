@@ -4,7 +4,7 @@ import { tmdb } from "../constants/tmdb";
 import { SectionWrapper } from "./SectionWrapper";
 import Show from "./Show.astro";
 
-const movies = await tmdb.everything(import.meta.env.TMDB_ACCOUNT);
+const movies = await tmdb.everything(import.meta.env.TMDB_ACCOUNT_OBJECT_ID);
 ---
 
 <SectionWrapper>

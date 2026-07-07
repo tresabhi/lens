@@ -14,5 +14,4 @@ const { show } = Astro.props;
   client:load
   {show}
   poster={await tmdb.image(show.poster_path, "w342")}
-  backdrop={await tmdb.image(show.backdrop_path, "w1280")}
 />

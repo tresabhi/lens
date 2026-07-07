@@ -18,22 +18,28 @@ export interface Paginated<Type> {
   total_results: number;
 }
 
+export interface AccountRating {
+  created_at: string;
+  value: number;
+}
+
 export interface AccountRatedMovie {
   adult: boolean;
   backdrop_path: string;
   genre_ids: number[];
   id: number;
+  title: string;
   original_language: string;
   original_title: string;
   overview: string;
   popularity: number;
   poster_path: string;
   release_date: string;
-  title: string;
+  softcore: boolean;
   video: boolean;
   vote_average: number;
   vote_count: number;
-  rating: number;
+  account_rating: AccountRating;
 }
 
 export interface AccountRatedTV {
@@ -51,5 +57,5 @@ export interface AccountRatedTV {
   name: string;
   vote_average: number;
   vote_count: number;
-  rating: number;
+  account_rating: AccountRating;
 }
