@@ -7,22 +7,3 @@
 .dark .movie-card .description {
   background: linear-gradient(var(--black-a7), var(--black-a9));
 }
-
-.movie-card .popup {
-  pointer-events: none;
-  opacity: 0;
-  position: absolute;
-  width: calc(110% * (16 / 9) * (3 / 2));
-  height: calc(110%);
-  top: 50%;
-  scale: 0.9;
-  background-position: center;
-  background-size: cover;
-  transition-duration: 200ms;
-  z-index: 2;
-}
-
-.movie-card:hover .popup {
-  opacity: 1;
-  scale: 1;
-}

@@ -4,12 +4,7 @@ import { tmdb } from "../constants/tmdb";
 import Movie from "./Movie.astro";
 import { SectionWrapper } from "./SectionWrapper";
 
-const movies = await tmdb
-  .allAccountRatedMovies(import.meta.env.TMDB_ACCOUNT)
-  .then((movies) =>
-    // movies.sort((a, b) => b.release_date.localeCompare(a.release_date))
-    movies
-  );
+const movies = await tmdb.allAccountRatedMovies(import.meta.env.TMDB_ACCOUNT);
 ---
 
 <SectionWrapper>

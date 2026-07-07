@@ -8,7 +8,7 @@ export class TMDB {
 
   async accountRatedMovies(account: string, page: number) {
     return await this.get<TMDB.AccountRatedMovies>(
-      `account/${account}/rated/movies?page=${page}&sort_by=created_at.desc`
+      `account/${account}/rated/movies?page=${page}&sort_by=created_at.desc`,
     );
   }
 

@@ -49,30 +49,7 @@ export function MovieWrapped({ movie, poster, backdrop }: Props) {
             backgroundPosition: "center",
             aspectRatio: "2 / 3",
           }}
-        >
-          <Flex
-            align="end"
-            display={{ initial: "none", md: "flex" }}
-            ref={popup}
-            className="popup"
-            style={{
-              borderRadius: `var(--radius-${RADIUS})`,
-              boxShadow: "var(--shadow-6)",
-              backgroundImage: `url(${backdrop})`,
-              overflow: "hidden",
-            }}
-          >
-            <Box
-              className="description"
-              p="4"
-              style={{
-                backdropFilter: "blur(1rem)",
-              }}
-            >
-              <Text>{movie.overview}</Text>
-            </Box>
-          </Flex>
-        </Box>
+        />
 
         <Box
           style={{
